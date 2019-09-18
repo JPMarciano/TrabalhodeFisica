@@ -58,7 +58,7 @@ void draw()
     tamcol = col.mag();
     colu = col.div(tamcol);
     prod = v2.dot(colu);
-    if (tamcol <= 410)
+    if ((tamcol <= 410)&&(prod > 0))
     {
         v2 = v2.sub(colu.mult(2*prod));
         v2 = v2.mult(coef);
