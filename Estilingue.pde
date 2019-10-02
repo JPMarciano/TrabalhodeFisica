@@ -14,6 +14,4 @@ class Estilingue{
     strokeWeight(10);
     line(pos.x,pos.y,pos.x+v.x,pos.y+v.y);
 }
-
-
 }

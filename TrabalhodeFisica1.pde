@@ -1,6 +1,6 @@
 PVector v = new PVector(0, 0);
 float e = 0.9;
-float oldt = millis()/1000.0;
+float oldt;
 float t, r, dt, tamcol, prod;
 PVector v1, col, s,col1,s2;
 PVector s1 = new PVector(0,0);
@@ -11,10 +11,13 @@ Planet[] planetas;
 Cesta cesta;
 Estilingue estilingue;
 PVector pos;
-float c=0;
+boolean c=true;
+boolean d=false;
+float k = 5;
+PVector p = new PVector(0, 0);
 
 void setup(){
-  size(1280,720);
+  size(3280,1720);
 }
 
 void draw() {
@@ -27,23 +30,27 @@ void draw() {
     pos = atual.getPos();
     cesta = atual.getCesta();
     estilingue=atual.getEstilingue();
+    c=true;
   }
   if (level==0){
     drawMenu();
   }
   else{
     estilingue.drawEstilingue(planetas[0].pos);
-    
-    while (c<1){
-      if (abs(pos.x-(cesta.pos.x+(cesta.pos.x-planetas[1].pos.x)*75/planetas[1].raio))<10 && abs(pos.y-(cesta.pos.y+(cesta.pos.y-planetas[1].pos.y)*75/planetas[1].raio))<10){
+    if (c){  
+      pos.x = estilingue.pos.x+(estilingue.pos.x-planetas[0].pos.x)*45/planetas[0].raio;
+      pos.y = estilingue.pos.y+(estilingue.pos.y-planetas[0].pos.y)*45/planetas[0].raio;
+    if(mousePressed){
+      if(abs(mouseX-pos.x)<30 && abs(mouseY-pos.y)<30){
+        d=true;
+    }
+  }
+}
+    else{
+      if (abs(pos.x-(cesta.pos.x+(cesta.pos.x-planetas[1].pos.x)*75/planetas[1].raio))<20 && abs(pos.y-(cesta.pos.y+(cesta.pos.y-planetas[1].pos.y)*75/planetas[1].raio))<20){
         levelchange = true;
     }
     // para testes
-    if (mousePressed) {
-      pos.x = mouseX;
-      pos.y = mouseY;
-      v = new PVector(0,0);
-    }
     
     
     //verificação de colisão
@@ -81,7 +88,7 @@ void draw() {
     v1.add(s2);
     v1.mult(dt);
     pos.add(v1);
-   
+    }
     //desenhar nivel
    
     for (int i = 0; i < planetas.length; i++){
@@ -93,10 +100,9 @@ void draw() {
     noStroke();
     fill(138,43,226);
     ellipse(pos.x, pos.y, 30, 30);
+
 }
   }
-}
-
 public void drawMenu(){
   float x=300, y=300, w=200, h=90;
   rect(x,y,w,h);
@@ -107,4 +113,24 @@ public void drawMenu(){
       fill(0);
     }
   }
+}
+void mouseDragged(){
+  if(c && level>=1 && abs(mouseX-pos.x)<300 && abs(mouseY-pos.y)<300){
+    stroke(0,255,0);
+    strokeWeight(5);
+    line(pos.x,pos.y,mouseX,mouseY);
+    
+  }
+  
+}
+void mouseReleased(){
+  
+  if (level>=1 && d){
+      p.x=mouseX;
+      p.y=mouseY;      
+      v= PVector.sub(pos, p);
+      v.mult(k);
+      c=false;
+      oldt = millis()/1000.0;
+}
 }
