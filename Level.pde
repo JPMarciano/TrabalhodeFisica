@@ -11,8 +11,9 @@ class Level{
   public Planet[] getPlanets(){
     switch (levelnumber){
       case 1:
-        planets = new Planet[1];
-        planets[0] = new Planet(new PVector(500, 500), 30000000.0, 100);
+        planets = new Planet[2];
+        planets[0] = new Planet(new PVector(850, 500), 25000000.0, 150);
+        planets[1] = new Planet(new PVector(200, 200), 20000000.0, 100);
         return planets;
       default:
         return null;
