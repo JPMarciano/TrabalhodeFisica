@@ -12,11 +12,11 @@ class Cesta{
     r = v.mag();
     v=v.div(r);
     v=v.mult(50);
-    stroke(200,0,0);
+    stroke(70,80,20);
     strokeWeight(10);
     line(pos.x,pos.y,pos.x+v.x,pos.y+v.y);
-    stroke(200,0,0);
+    noStroke();
     fill(200,0,0);
-    ellipse(pos.x+v.x+25,pos.y+v.y+25,50,50);
+    ellipse(pos.x+v.x*(1.5),pos.y+v.y*(1.5),50,50);
   }
 }

@@ -29,10 +29,10 @@ void draw() {
     drawMenu();
   }
   else{
-    
-    //Metodo de Euler para gravidade
-    //Para testes
-    
+      if (abs(pos.x-(cesta.pos.x+(cesta.pos.x-planetas[1].pos.x)*50/planetas[1].raio))<25 && abs(pos.y-(cesta.pos.y+(cesta.pos.y-planetas[1].pos.y)*50/planetas[1].raio))<25){
+        levelchange = true;
+    }
+    // para testes
     if (mousePressed) {
       pos.x = mouseX;
       pos.y = mouseY;
@@ -41,10 +41,8 @@ void draw() {
     
     
     //verificação de colisão
-    
     s=s1.copy();
     for (int i = 0; i < planetas.length; i++){
-    
       col = PVector.sub(planetas[i].pos, pos);
       tamcol = col.mag();
       col.div(tamcol);
@@ -81,13 +79,15 @@ void draw() {
     //desenhar nivel
    
     for (int i = 0; i < planetas.length; i++){
+      noStroke();
       fill(100, 200, 0);
       ellipse(planetas[i].pos.x, planetas[i].pos.y, planetas[i].raio*2, planetas[i].raio*2);
     }
-    cesta.drawCesta(planetas[1].pos);    
+    cesta.drawCesta(planetas[1].pos); 
+    noStroke();
     fill(0,100,0);
     ellipse(pos.x, pos.y, 30, 30);
-    }
+}
 }
 
 public void drawMenu(){

@@ -34,7 +34,7 @@ class Level{
    public Cesta getCesta(){
     switch (levelnumber){
       case 1:
-        cesta = new Cesta(new PVector(200,250));  //posicao da bola
+        cesta = new Cesta(new PVector(300,200));  //posicao da bola
         return cesta;
       default:
         return null;
