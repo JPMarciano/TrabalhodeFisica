@@ -2,7 +2,8 @@ class Level{
   
   public int levelnumber;
   Planet[] planets;
-  PVector[] position;
+  PVector position;
+  Cesta cesta;
   
   Level(int levelnumber){
     this.levelnumber = levelnumber;
@@ -20,16 +21,23 @@ class Level{
     }
   }
   
-  public PVector[] getPos(){
+  public PVector getPos(){
     switch (levelnumber){
       case 1:
-        position = new PVector[2];
-        position[0] = new PVector(200, 300);  //posicao da bola
-        position[1] = new PVector(700, 800);  //posicao da cesta
+        position = new PVector(200, 300);  //posicao da bola
         return position;
       default:
         return null;
     }
     
+  }
+   public Cesta getCesta(){
+    switch (levelnumber){
+      case 1:
+        cesta = new Cesta(new PVector(200,250));  //posicao da bola
+        return cesta;
+      default:
+        return null;
+    }
   }
 }
