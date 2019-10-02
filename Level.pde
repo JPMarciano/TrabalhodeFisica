@@ -4,6 +4,7 @@ class Level{
   Planet[] planets;
   PVector position;
   Cesta cesta;
+  Estilingue estilingue;
   
   Level(int levelnumber){
     this.levelnumber = levelnumber;
@@ -36,6 +37,15 @@ class Level{
       case 1:
         cesta = new Cesta(new PVector(300,200));  //posicao da bola
         return cesta;
+      default:
+        return null;
+    }
+  }
+  public Estilingue getEstilingue(){
+    switch (levelnumber){
+      case 1:
+        estilingue = new Estilingue(new PVector(1000,500));  //posicao da bola
+        return estilingue;
       default:
         return null;
     }

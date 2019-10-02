@@ -9,7 +9,9 @@ boolean levelchange = false;
 Level atual;
 Planet[] planetas;
 Cesta cesta;
+Estilingue estilingue;
 PVector pos;
+float c=0;
 
 void setup(){
   size(1280,720);
@@ -24,12 +26,16 @@ void draw() {
     planetas = atual.getPlanets();
     pos = atual.getPos();
     cesta = atual.getCesta();
+    estilingue=atual.getEstilingue();
   }
   if (level==0){
     drawMenu();
   }
   else{
-      if (abs(pos.x-(cesta.pos.x+(cesta.pos.x-planetas[1].pos.x)*50/planetas[1].raio))<25 && abs(pos.y-(cesta.pos.y+(cesta.pos.y-planetas[1].pos.y)*50/planetas[1].raio))<25){
+    estilingue.drawEstilingue(planetas[0].pos);
+    
+    while (c<1){
+      if (abs(pos.x-(cesta.pos.x+(cesta.pos.x-planetas[1].pos.x)*75/planetas[1].raio))<10 && abs(pos.y-(cesta.pos.y+(cesta.pos.y-planetas[1].pos.y)*75/planetas[1].raio))<10){
         levelchange = true;
     }
     // para testes
@@ -85,9 +91,10 @@ void draw() {
     }
     cesta.drawCesta(planetas[1].pos); 
     noStroke();
-    fill(0,100,0);
+    fill(138,43,226);
     ellipse(pos.x, pos.y, 30, 30);
 }
+  }
 }
 
 public void drawMenu(){
