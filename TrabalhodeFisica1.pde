@@ -102,7 +102,7 @@ void draw() {
      
       for (int i = 0; i < planetas.length; i++){
         noStroke();
-        fill(100, 200, 0);
+        fill(205, 133, 63);
         ellipse(planetas[i].pos.x, planetas[i].pos.y, planetas[i].raio*2, planetas[i].raio*2);
       }
       reset();

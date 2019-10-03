@@ -15,17 +15,17 @@ class Level{
       case 1:
         planets = new Planet[2];
         planets[0] = new Planet(new PVector(850, 500), 25000000.0, 150);
-        planets[1] = new Planet(new PVector(200, 200), 30000000.0, 100);
+        planets[1] = new Planet(new PVector(200, 200), 50000000.0, 100);
         return planets;
       case 2:
         planets = new Planet[2];
-        planets[0] = new Planet(new PVector(250, 500), 40000000.0, 200);
-        planets[1] = new Planet(new PVector(800, 200), 20000000.0, 100);
+        planets[0] = new Planet(new PVector(250, 500), 20000000.0, 200);
+        planets[1] = new Planet(new PVector(800, 200), 40000000.0, 100);
         return planets;
       case 3:
         planets = new Planet[3];
         planets[0] = new Planet(new PVector(1050, 500), 25000000.0, 100);
-        planets[1] = new Planet(new PVector(350, 250), 40000000.0, 200);
+        planets[1] = new Planet(new PVector(350, 250), 50000000.0, 200);
         planets[2] = new Planet(new PVector(750, 500), 35000000.0, 150);
         return planets;
       default:
