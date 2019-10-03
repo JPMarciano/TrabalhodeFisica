@@ -15,13 +15,19 @@ boolean c=true;
 boolean d=false;
 float k = 5;
 PVector p = new PVector(0, 0);
+PImage fundo, planeta1;
+PShape planeta;
+
 
 void setup(){
   size(1280,720);
+  fundo = loadImage("espaco.jpg");
+  planeta1 = loadImage("earth.jpg");
+  noStroke();
 }
 
 void draw() {
-  background(0);
+  background(fundo);
   if (levelchange){
     level++;
     levelchange = false;
@@ -29,11 +35,14 @@ void draw() {
     planetas = atual.getPlanets();
     pos = atual.getPos();
     cesta = atual.getCesta();
-    estilingue=atual.getEstilingue();
-    c=true;
+    estilingue = atual.getEstilingue();
+    c = true;
   }
   if (level==0){
     drawMenu();
+  }
+  else if(level==4){
+    fim();
   }
   else{
     estilingue.drawEstilingue(planetas[0].pos);
@@ -41,8 +50,8 @@ void draw() {
       pos.x = estilingue.pos.x+(estilingue.pos.x-planetas[0].pos.x)*45/planetas[0].raio;
       pos.y = estilingue.pos.y+(estilingue.pos.y-planetas[0].pos.y)*45/planetas[0].raio;
       if(mousePressed){
-        if(abs(mouseX-pos.x)<30 && abs(mouseY-pos.y)<30){
-          d=true;
+        if(abs(mouseX-pos.x)<40 && abs(mouseY-pos.y)<40){
+          d = true;
         }
       }
     }  
@@ -88,7 +97,8 @@ void draw() {
       v1.mult(dt);
       pos.add(v1);
       }
-      //desenhar nivel
+      
+      //desenhar nivel      
      
       for (int i = 0; i < planetas.length; i++){
         noStroke();
@@ -99,13 +109,12 @@ void draw() {
       cesta.drawCesta(planetas[1].pos); 
       noStroke();
       fill(138,43,226);
-      ellipse(pos.x, pos.y, 30, 30);
-
-}
+      ellipse(pos.x, pos.y, 30, 30);      
+  }
 }  
   
 public void drawMenu(){
-  float  w=300, h=100;
+  float w=300, h=100;
   float x=width/2-w/2, y=height/2-h/2;
   fill(255);
   rect(x,y,w,h);
@@ -119,6 +128,16 @@ public void drawMenu(){
       fill(0);
     }
   }
+}
+
+public void fim(){
+  float w=300, h=100;
+  float x=width/2-w/2, y=height/2-h/2;
+  fill(255);
+  rect(x,y,w,h);
+  fill(0);
+  textSize(32);
+  text("FIM", x+120, y+h-35);
 }
 
 public void reset(){
@@ -136,15 +155,15 @@ public void reset(){
     }
   }
 }
+
 void mouseDragged(){
   if(c && level>=1 && abs(mouseX-pos.x)<300 && abs(mouseY-pos.y)<300){
     stroke(0,255,0);
     strokeWeight(5);
     line(pos.x,pos.y,mouseX,mouseY);
-    
-  }
-  
+  }  
 }
+
 void mouseReleased(){
   
   if (level>=1 && d){
