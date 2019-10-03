@@ -15,14 +15,12 @@ boolean c=true;
 boolean d=false;
 float k = 5;
 PVector p = new PVector(0, 0);
-PImage fundo, planeta1;
-PShape planeta;
+PImage fundo;
 
 
 void setup(){
   size(1280,720);
   fundo = loadImage("espaco.jpg");
-  planeta1 = loadImage("earth.jpg");
   noStroke();
 }
 
