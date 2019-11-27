@@ -1,9 +1,11 @@
-float d=0;
-PVector pos1, pos2=new PVector(50,50), pos3;
+float d=0, g;
 float r=260, w=0.2;
 PVector[] ciclo = new PVector[20];
+PVector[] parab = new PVector[20];
 Checkbox[] caixas = new Checkbox[3];
 Boolean botao=false;
+float x0, y0, xf, yf, teta, coss, sen, hip;
+PVector posc, posr, posu, pos1, pos2, pos3;
 
 void setup() {
   size(1100,700);
@@ -15,46 +17,77 @@ void setup() {
   caixas[0]=new Checkbox(1000, 100);
   caixas[1]=new Checkbox(1000, 130);
   caixas[2]=new Checkbox(1000, 160);
+  pos2 = new PVector(-790+r*PI, 600-2*r);
+  g=w*w*r/4.0;
+  x0 = -790+r*PI;
+  y0 = 600-2*r;
+  xf = -790+r*(w*18+PI)+r*sin(w*18+PI);
+  yf = 600-r+r*cos(w*18+PI);
+  hip = sqrt((xf-x0)*(xf-x0)+(yf-y0)*(yf-y0));
+  coss = (xf-x0)/hip;
+  sen = (yf-y0)/hip;
+  posc= new PVector(x0,y0);
+  posr = new PVector(x0,y0);
+  posu = new PVector(x0,y0);
+  pos1=new PVector(x0,y0);
+  pos2=new PVector(x0,y0);
+  pos3=new PVector(x0,y0);
+  print(sqrt(2*(yf-y0)/g));
 }
 
 void draw() {
   background(255);
-   
-  
   
   if ((caixas[0].b)||(caixas[1].b)||(caixas[2].b)){
+    
     if(caixas[0].b){
       noFill();
       stroke(0);
       strokeWeight(10);
       drawCurve(0,20,ciclo);
-      
-      pos1 = cicloide(d);
-      fill(255,99,71);
-      stroke(255,99,71);
-      ellipse(pos1.x, pos1.y, 30, 30); 
     }
     
     if(caixas[1].b){
-      noFill();
       stroke(0);
       strokeWeight(10);
-      
-      
-      fill(153,204,50);
-      stroke(153,204,50);
-      ellipse(pos2.x, pos2.y, 30, 30); 
+      line(-790+r*PI, 600-2*r, -790+r*(w*18+PI)+r*sin(w*18+PI), 600-r+r*cos(w*18+PI));
     }
     
-    if(d<=18){
-      d+=0.19;
+    if(caixas[2].b){
+      stroke(0);
+      strokeWeight(10);
+      drawCurvinha();
     }
+    
+    if(caixas[0].b){
+      pos1 = cicloide(d, pos1);
+      fill(255,99,71);
+      stroke(255,99,71);
+      ellipse(pos1.x, pos1.y, 30, 30); 
+      print(d);
+    }
+    
+    if(caixas[1].b){
+      pos2 = reta(d, pos2);
+      fill(153,204,50);
+      stroke(153,204,50);
+      ellipse(pos2.x, pos2.y, 30, 30);
+      print(d);
+    }
+    
+    if(caixas[2].b){
+      pos3 = curvinha(d, pos3);
+      fill(0,127,255);
+      stroke(0,127,255);
+      ellipse(pos3.x, pos3.y, 30, 30);
+      print(d);
+    }
+    print("    \n");
+    d+=0.18;
     
   }else{
     d=0;
-  }
-  
-  
+  } 
   
   for(int i=0;i<3;i++){
     caixas[i].render();
@@ -64,23 +97,47 @@ void draw() {
   rect(960,10,100,50);
   if ((mousePressed)&&(mouseX>=960)&&(mouseX<=1060)&&(mouseY>=10)&&(mouseY<=60)){
     d=0;
+    pos1=new PVector(x0,y0);
+    pos2=new PVector(x0,y0);
+    pos3=new PVector(x0,y0);
   }
 }
 
-PVector cicloide(float tp){
-  PVector posc = new PVector(0,0);
-  posc.x=-790+r*(w*tp+PI)+r*sin(w*tp+PI);
-  posc.y=600-r+r*cos(w*tp+PI);
+PVector cicloide(float tp, PVector posc){
+  if(posc.x<=xf){
+    posc.x=-790+r*(w*tp+PI)+r*sin(w*tp+PI);
+    posc.y=600-r+r*cos(w*tp+PI);
+  }
   return posc;
 }
 
-//PVector arco(float tp){
-//  PVector posa = new PVector(0,0);
-  
-//  return posa
-//}
+PVector reta(float tp, PVector posr){
+  if (posr.x<=xf){
+    posr.x = x0 + 0.5*g*coss*tp*tp;
+    posr.y = y0 + 0.5*g*sen*tp*tp;
+  }
+  return posr;
+}
 
-void drawCurve(float t,int n, PVector[] pt){
+PVector curvinha(float tp, PVector posu){
+  if (posu.y<yf-10){
+    posu.x = x0;
+    posu.y = y0 + 0.5*g*tp*tp;
+  }else{
+    posu.x = x0 + sqrt(2*g*(yf-y0))*(tp-sqrt(2*(yf-y0)/g));
+    posu.y = yf;
+  }
+  return posu;
+}
+
+void drawCurvinha(){
+  line(x0,y0,x0,yf-10);
+  line(x0+10,yf,xf,yf);
+  stroke(0);
+  curve(x0, yf-50, x0, yf-10, x0+10, yf,  x0+50, yf);
+}
+
+void drawCurve(float t, int n, PVector[] pt){
   curveTightness(t);
   beginShape();
   for(int j=0; j<n; j++){
