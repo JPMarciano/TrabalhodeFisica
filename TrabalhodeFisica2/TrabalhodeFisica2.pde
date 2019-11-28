@@ -32,7 +32,6 @@ void setup() {
   pos1=new PVector(x0,y0);
   pos2=new PVector(x0,y0);
   pos3=new PVector(x0,y0);
-  print(sqrt(2*(yf-y0)/g));
 }
 
 void draw() {
@@ -64,7 +63,6 @@ void draw() {
       fill(255,99,71);
       stroke(255,99,71);
       ellipse(pos1.x, pos1.y, 30, 30); 
-      print(d);
     }
     
     if(caixas[1].b){
@@ -72,7 +70,6 @@ void draw() {
       fill(153,204,50);
       stroke(153,204,50);
       ellipse(pos2.x, pos2.y, 30, 30);
-      print(d);
     }
     
     if(caixas[2].b){
@@ -80,9 +77,8 @@ void draw() {
       fill(0,127,255);
       stroke(0,127,255);
       ellipse(pos3.x, pos3.y, 30, 30);
-      print(d);
     }
-    print("    \n");
+    
     d+=0.18;
     
   }else{
@@ -105,16 +101,16 @@ void draw() {
 
 PVector cicloide(float tp, PVector posc){
   if(posc.x<=xf){
-    posc.x=-790+r*(w*tp+PI)+r*sin(w*tp+PI);
-    posc.y=600-r+r*cos(w*tp+PI);
+    posc.x=x0+r*w*tp-r*sin(w*tp);
+    posc.y=y0+r-r*cos(w*tp);
   }
   return posc;
 }
 
 PVector reta(float tp, PVector posr){
   if (posr.x<=xf){
-    posr.x = x0 + 0.5*g*coss*tp*tp;
-    posr.y = y0 + 0.5*g*sen*tp*tp;
+    posr.x = x0 + g*coss*sen*tp*tp/2.0;
+    posr.y = y0 + g*sen*sen*tp*tp/2.0;
   }
   return posr;
 }
@@ -122,10 +118,12 @@ PVector reta(float tp, PVector posr){
 PVector curvinha(float tp, PVector posu){
   if (posu.y<yf-10){
     posu.x = x0;
-    posu.y = y0 + 0.5*g*tp*tp;
+    posu.y = y0 + g*tp*tp/2.0;
   }else{
-    posu.x = x0 + sqrt(2*g*(yf-y0))*(tp-sqrt(2*(yf-y0)/g));
-    posu.y = yf;
+    if(posu.x<=xf){
+      posu.x = x0 + sqrt(2*g*(yf-y0))*(tp-sqrt(2*(yf-y0)/g));
+      posu.y = yf;
+    }
   }
   return posu;
 }
